@@ -446,7 +446,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-#      - build-arm
+      - build-arm
       - tests
     strategy:
       fail-fast: false
@@ -487,7 +487,7 @@ jobs:
             --tag ${{ inputs.docker_org }}/${{ matrix.target }}:$pinned_mailu_version \
             --tag ${{ inputs.docker_org }}/${{ matrix.target }}:latest \
             ghcr.io/${{ steps.string.outputs.lowercase }}/${{ matrix.target }}:${{ env.MAILU_VERSION }}-build \
-#            ghcr.io/${{ steps.string.outputs.lowercase }}/${{ matrix.target }}:${{ env.MAILU_VERSION }}-build-arm
+            ghcr.io/${{ steps.string.outputs.lowercase }}/${{ matrix.target }}:${{ env.MAILU_VERSION }}-build-arm
       - name: Push x64 image to Github (ghcr.io)
         if: contains(inputs.architecture, 'linux/amd64') && !contains(inputs.architecture, 'linux/arm64/v8,linux/arm/v7')
         shell: bash
@@ -498,16 +498,16 @@ jobs:
             --tag ${{ inputs.docker_org }}/${{ matrix.target }}:$pinned_mailu_version \
             --tag ${{ inputs.docker_org }}/${{ matrix.target }}:latest \
             ghcr.io/${{ steps.string.outputs.lowercase }}/${{ matrix.target }}:${{ env.MAILU_VERSION }}-build
-#      - name: Push arm image to Github (ghcr.io)
-#        if: contains(inputs.architecture, 'linux/arm64/v8,linux/arm/v7') && !contains(inputs.architecture, 'linux/amd64')
-#        shell: bash
-#        run: |
-#          if [ '${{ env.MAILU_VERSION }}' == 'master' ]; then pinned_mailu_version='master'; else pinned_mailu_version=${{ env.PINNED_MAILU_VERSION}}; fi;
-#          docker buildx imagetools create \
-#            --tag ${{ inputs.docker_org }}/${{ matrix.target }}:${{ env.MAILU_VERSION }} \
-#            --tag ${{ inputs.docker_org }}/${{ matrix.target }}:$pinned_mailu_version \
-#            --tag ${{ inputs.docker_org }}/${{ matrix.target }}:latest \
-#            ghcr.io/${{ steps.string.outputs.lowercase }}/${{ matrix.target }}:${{ env.MAILU_VERSION }}-build-arm
+      - name: Push arm image to Github (ghcr.io)
+        if: contains(inputs.architecture, 'linux/arm64/v8,linux/arm/v7') && !contains(inputs.architecture, 'linux/amd64')
+        shell: bash
+        run: |
+          if [ '${{ env.MAILU_VERSION }}' == 'master' ]; then pinned_mailu_version='master'; else pinned_mailu_version=${{ env.PINNED_MAILU_VERSION}}; fi;
+          docker buildx imagetools create \
+            --tag ${{ inputs.docker_org }}/${{ matrix.target }}:${{ env.MAILU_VERSION }} \
+            --tag ${{ inputs.docker_org }}/${{ matrix.target }}:$pinned_mailu_version \
+            --tag ${{ inputs.docker_org }}/${{ matrix.target }}:latest \
+            ghcr.io/${{ steps.string.outputs.lowercase }}/${{ matrix.target }}:${{ env.MAILU_VERSION }}-build-arm
 
 #This job creates a tagged release. A tag is created for the pinned version x.y.z. The GH release refers to this tag.
   tag-release:
