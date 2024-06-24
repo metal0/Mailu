@@ -20,7 +20,6 @@ RUN set -euxo pipefail \
     aspell-uk aspell-ru aspell-fr aspell-de aspell-en \
   ; rm /etc/nginx/http.d/default.conf \
   ; rm /etc/php83/php-fpm.d/www.conf \
-  ; ln -s /usr/bin/php83 /usr/bin/php \
   ; mkdir -m 700 /root/.gnupg/ \
   ; gpg --import /tmp/snappymail.asc \
   ; gpg --import /tmp/roundcube.asc \
@@ -55,7 +54,7 @@ COPY roundcube/config/config.inc.carddav.php /var/www/roundcube/plugins/carddav/
 
 # snappymail
 
-ENV SNAPPYMAIL_URL https://github.com/the-djmaze/snappymail/releases/download/v2.31.0/snappymail-2.31.0.tar.gz
+ENV SNAPPYMAIL_URL https://github.com/the-djmaze/snappymail/releases/download/v2.36.1/snappymail-2.36.1.tar.gz
 
 RUN set -euxo pipefail \
   ; mkdir  /var/www/snappymail \
