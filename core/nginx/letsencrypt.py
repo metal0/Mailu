@@ -46,19 +46,19 @@ time.sleep(5)
 
 # Run certbot every day
 while True:
-    while True:
-        hostname = os.environ['HOSTNAMES'].split(',')[0]
-        target = f'http://{hostname}/.well-known/acme-challenge/testing'
-        try:
-            r = requests.get(target)
-            if r.status_code != 204:
-                log.critical(f"Can't reach {target}!, please ensure it's fixed or change the TLS_FLAVOR.")
-                time.sleep(5)
-            else:
-                break
-        except Exception as e:
-            log.error(f"Exception while fetching {target}!", exc_info = e)
-            time.sleep(15)
+    #while True:
+    #    hostname = os.environ['HOSTNAMES'].split(',')[0]
+    #    target = f'http://{hostname}/.well-known/acme-challenge/testing'
+    #    try:
+    #        r = requests.get(target)
+    #        if r.status_code != 204:
+    #            log.critical(f"Can't reach {target}!, please ensure it's fixed or change the TLS_FLAVOR.")
+    #            time.sleep(5)
+    #        else:
+    #            break
+    #    except Exception as e:
+    #        log.error(f"Exception while fetching {target}!", exc_info = e)
+    #        time.sleep(15)
 
     subprocess.call(command)
     subprocess.call(command2)
